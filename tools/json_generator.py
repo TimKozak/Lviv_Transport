@@ -16,7 +16,7 @@ def read_file(filename) -> list:
     return rows
 
 # GENERATES UNIQUE COORD VIEW
-def generate_coord_view_json(rows) -> str:
+def generate_coord_view_json(rows) -> dict:
     used_addresses = dict()
     stations_dict = dict()
 
@@ -47,7 +47,22 @@ def generate_coord_view_json(rows) -> str:
 
     return stations_dict
 
+# FIND STATIONS WITHOUT COORDS
+def stations_without_coords(stations_dict) -> list:
+    no_coord_stations = list()
+
+    for station in stations_dict.values():
+        if station['coords'][0] == "":
+            no_coord_stations.append(station['street'])
+
+    with open("no_coord_stations.txt", "w") as outfile:
+        for street in no_coord_stations:
+            outfile.write(street+"\n")
+
+    return no_coord_stations
+
 
 if __name__ == '__main__':
     data = read_file('./data/stations.csv')
-    generate_coord_view_json(data)
+    stations_dict = generate_coord_view_json(data)
+    todo = stations_without_coords(stations_dict)
