@@ -31,6 +31,7 @@ def generate_coord_view_json(rows) -> dict:
                 "routes": [row[0] + f" ({'odd' if row[5] else 'even'})"],
                 "name": row[1],
                 "street": row[2],
+                "district": row[6],
                 "coords": (row[3], row[4]),
             }
 
@@ -62,7 +63,7 @@ def generate_route_view_json(rows) -> dict:
         if key not in used_routes:
             route = {
                 "stations": [
-                    {"name": row[1], "street": row[2], "coords": (row[3], row[4])}
+                    {"name": row[1], "street": row[2], "district": row[6], "coords": (row[3], row[4])}
                 ],
             }
 
@@ -71,7 +72,7 @@ def generate_route_view_json(rows) -> dict:
 
         else:
             routes_dict[key]["stations"].append(
-                {"name": row[1], "street": row[2], "coords": (row[3], row[4])}
+                {"name": row[1], "street": row[2], "district": row[6], "coords": (row[3], row[4])}
             )
 
     json_object = json.dumps(routes_dict, ensure_ascii=False)
