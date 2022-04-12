@@ -2,6 +2,8 @@ import json
 import csv
 
 # READ FILE AND RETURN VALUES ARRAY
+
+
 def read_file(filename) -> list:
     rows = []
 
@@ -10,8 +12,6 @@ def read_file(filename) -> list:
         header = next(csvreader)
         for row in csvreader:
             rows.append(row)
-
-    print(header)
 
     return rows
 
@@ -63,7 +63,8 @@ def generate_route_view_json(rows) -> dict:
         if key not in used_routes:
             route = {
                 "stations": [
-                    {"name": row[1], "street": row[2], "district": row[6], "coords": (row[3], row[4])}
+                    {"name": row[1], "street": row[2],
+                        "district": row[6], "coords": (row[3], row[4])}
                 ],
             }
 
@@ -72,7 +73,8 @@ def generate_route_view_json(rows) -> dict:
 
         else:
             routes_dict[key]["stations"].append(
-                {"name": row[1], "street": row[2], "district": row[6], "coords": (row[3], row[4])}
+                {"name": row[1], "street": row[2],
+                    "district": row[6], "coords": (row[3], row[4])}
             )
 
     json_object = json.dumps(routes_dict, ensure_ascii=False)

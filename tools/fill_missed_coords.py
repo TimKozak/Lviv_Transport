@@ -18,6 +18,7 @@ def fill_missed_information(df_missed_geo, df_stations):
             df_stations.at[ind, "latitude"] = coords[0]
             df_stations.at[ind, "longitude"] = coords[1]
 
+    del df_stations['Unnamed: 0']
     return df_stations
 
 
@@ -29,4 +30,4 @@ if __name__ == "__main__":
     df_missed_geo = read_csv_file("./data/missed_geo_information.csv")
     df_stations = read_csv_file("./data/stations.csv")
     df_result = fill_missed_information(df_missed_geo, df_stations)
-    write_csv_file(df_result, "./data/stations_filled_geo.csv")
+    write_csv_file(df_result, "./data/stations.csv")
