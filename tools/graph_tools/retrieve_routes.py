@@ -1,7 +1,10 @@
 from asyncio import current_task
 import json
 
-def retrieve_routes(data):
+def retrieve_routes():
+    with open('./jsons/routes.json', 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
     # make list of tuples: [(stop1, stop2), (stop1, stop3)]
     # each stop: (lat, lon)
 
@@ -29,9 +32,5 @@ def retrieve_routes(data):
     
     return retrieved_odd_routes, odd_route_names, retrieved_even_routes, even_route_names
 
-
-if __name__ == "__main__":
-    with open('./jsons/routes.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    odd_routes, odd_names, even_routes, even_names = retrieve_routes(data)
+# odd_routes, odd_names, even_routes, even_names = retrieve_routes()
 
