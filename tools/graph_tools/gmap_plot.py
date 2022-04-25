@@ -1,9 +1,9 @@
-import gmplot 
+import gmplot
 import json
 
 # Load file data
 with open('./shapes_routes.json', 'r', encoding='utf-8') as json_file:
-        data = json.load(json_file)
+    data = json.load(json_file)
 
 # Define GmapOne with starting coords and zoom value
 gmapOne = gmplot.GoogleMapPlotter(49.84063, 24.02868, 15)
