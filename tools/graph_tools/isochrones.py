@@ -82,5 +82,5 @@ for isochrone_polys in isochrones:
         ax.add_patch(patch)
     print("Station's polygon added!")
 
-fig.savefig(f'./isochrones/{str(datetime.now())[:-7].replace(":", "").replace(" ", "_")}.png')
+fig.savefig(f'./isochrones/{str(datetime.now())[:-7].replace(":", "").replace(" ", "_")}.png', dpi=1200)
 plt.show()
