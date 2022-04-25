@@ -20,7 +20,7 @@ def retrieve_routes():
         current_stations = current_route['stations']
 
         for station in current_stations:
-            st_coords = tuple(station['coords'])
+            st_coords = tuple(map(float, tuple(station['coords'])))
             route_stops.append(st_coords)
 
         if odd:
