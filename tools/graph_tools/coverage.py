@@ -1,14 +1,17 @@
-# display coverage with folium
+# display coverage with folium, Alina
 
 import folium
-from retrieve_routes import retrieve_routes 
+from retrieve_routes import retrieve_routes
+import folium.plugins as plugins
 
 def display_coverage(mins):
     routes, names = retrieve_routes()
     coords = [elem for route in routes for elem in route]
 
     map = folium.Map(location=(49.8397, 24.0297), zoom_start=12) #Lviv
+    plugins.HeatMap(coords, radius=10, use_local_extrema=True).add_to(map)
 
+    '''
     for i in range(len(coords)):
         lat, lon = coords[i]
 
@@ -21,9 +24,9 @@ def display_coverage(mins):
                     ).add_to(map)
  
     map.add_child(folium.LayerControl())
-    map.save('map.html')
-
+    map.save('map.png')
+    '''
 
 if __name__ == '__main__':
-    display_coverage(mins=3)
+    display_coverage(mins=5)
 
