@@ -1,4 +1,4 @@
-from nbformat import write
+# Seva Archakov
 import pandas as pd
 
 
@@ -18,7 +18,7 @@ def fill_missed_information(df_missed_geo, df_stations):
             df_stations.at[ind, "latitude"] = coords[0]
             df_stations.at[ind, "longitude"] = coords[1]
 
-    del df_stations['Unnamed: 0']
+    del df_stations["Unnamed: 0"]
     return df_stations
 
 
