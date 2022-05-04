@@ -9,8 +9,8 @@ BASE_URL = f"https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/
 def get_info(point):
     response = requests.get(f"{BASE_URL}&point={point[0]},{point[1]}")
     response_dict = response.json()
-    response_json = json.dumps(response_dict)
-    return response_json
+    # response_json = json.dumps(response_dict)
+    return response_dict
 
 
 if __name__ == "__main__":
