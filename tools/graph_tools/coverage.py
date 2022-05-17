@@ -15,5 +15,5 @@ def display_coverage():
 
 
 if __name__ == '__main__':
-    display_coverage(mins=5)
+    display_coverage()
 
