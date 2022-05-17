@@ -2,7 +2,10 @@
 
 import json
 
-def retrieve_routes():
+def retrieve_routes() -> tuple:
+    """
+    Retrievs data from shapes_routes.json and returns the tuple of routes and their names.
+    """
     with open('./jsons/shapes_routes.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
     
@@ -24,3 +27,14 @@ def retrieve_routes():
         route_names.append(key)
 
     return retrieved_routes, route_names
+
+if __name__ == '__main__':
+    routes, names = retrieve_routes()
+    stations = []
+
+    for route in routes:
+        for station in route:
+            stations.append(station)
+    
+    print(len(routes))
+
