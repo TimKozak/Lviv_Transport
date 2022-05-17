@@ -14,4 +14,8 @@ def get_info(point):
 
 
 if __name__ == "__main__":
-    print(get_info((49.79804897912645, 24.0173781631986)))
+    data = get_info((49.79804897912645, 24.0173781631986))
+    points = data['flowSegmentData']['coordinates']['coordinate'][:5]
+    for point in points:
+        print(point)
+

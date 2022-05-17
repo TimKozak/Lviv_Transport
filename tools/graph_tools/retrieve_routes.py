@@ -14,7 +14,7 @@ def retrieve_routes() -> list:
             list of routes, each route defines as a list of the names of
             public transport stops
     '''
-    with open('./jsons/shapes_routes.json', 'r', encoding='utf-8') as f:
+    with open('./jsons/shapes/shapes_routes_all.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     retrieved_routes = []
@@ -40,6 +40,4 @@ if __name__ == '__main__':
     for route in routes:
         for station in route:
             stations.append(station)
-    
-    print(len(routes))
 
