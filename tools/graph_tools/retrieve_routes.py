@@ -1,6 +1,7 @@
 # Alina
 import json
 
+
 def retrieve_routes() -> list:
     '''
     Form list of routes from a json file.
@@ -31,3 +32,14 @@ def retrieve_routes() -> list:
         route_names.append(key)
 
     return retrieved_routes, route_names
+
+if __name__ == '__main__':
+    routes, names = retrieve_routes()
+    stations = []
+
+    for route in routes:
+        for station in route:
+            stations.append(station)
+    
+    print(len(routes))
+
