@@ -8,10 +8,11 @@ from node import StationNode
 class Edge:
     start: StationNode
     end: StationNode
+    distance: float
     weight: float = 1
 
     def __str__(self) -> str:
-        return f"From {self.start} to {self.end} with weight {self.weight}"
+        return f"From {self.start} to {self.end} with distance {self.distance}"
 
     def __hash__(self) -> int:
         return hash((self.start, self.end))

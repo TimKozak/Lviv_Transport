@@ -1,9 +1,12 @@
 # Seva Archakov
+from collections import deque
 from queue import PriorityQueue
+from sys import maxsize as INT_MAX
 from typing import List
 
+import pandas as pd
+
 from edge import Edge
-from location import Location
 from node import StationNode
 
 
@@ -36,17 +39,56 @@ class TransportGraph:
         return adjacency_list, list(stations)
 
     def check_connectivity(self):
-        visited_stations = []
-        first_station = self._stations[0]
-
-        self._dfs(visited_stations, first_station)
+        visited_stations = self._dfs(self._stations[0])
         print(list(set(self._stations) - set(visited_stations)))
 
-    def _dfs(self, visited, station):
-        if station not in visited:
-            visited.append(station)
+    def generate_route_changes_csv(self):
+        df_route_changes = []
+        for station in self._stations:
+            print(station)
+            print("-------------------------")
+            route_changes, station_coordinates = self._zero_one_bfs(station)
+            station_data = []
+            for end_station, changes in route_changes.items():
+                row = [
+                    station.name.split("-")[0],
+                    station.location.lat,
+                    station.location.long,
+                    end_station,
+                    station_coordinates[end_station].lat,
+                    station_coordinates[end_station].long,
+                    changes,
+                ]
+                station_data.append(row)
+            df_route_changes.extend(station_data)
+
+        df = pd.DataFrame(
+            df_route_changes,
+            columns=[
+                "from",
+                "from_lat",
+                "from_long",
+                "to",
+                "to_lat",
+                "to_long",
+                "changes",
+            ],
+        )
+        df.to_csv("route_changes.csv", index=False)
+
+    def _dfs(self, start):
+        stack = [start]
+        visited_stations = []
+
+        while stack:
+            station = stack.pop()
+            if station in visited_stations:
+                continue
+            visited_stations.append(station)
             for edge in self._adjacency_list[station]:
-                self._dfs(visited, edge[0])
+                stack.append(edge[0])
+
+        return visited_stations
 
     def _dijkstra(self, start: StationNode):
         visited = []
@@ -76,3 +118,35 @@ class TransportGraph:
                         pr[next_station] = curr_station
 
         return cost, pr
+
+    def _zero_one_bfs(self, start: StationNode):
+        distances = {station: INT_MAX for station in self._stations}
+
+        Q = deque()
+        distances[start] = 0
+        Q.append(start)
+
+        while Q:
+            curr_station = Q[0]
+            Q.popleft()
+            for edge in self._adjacency_list[curr_station]:
+                next_station = edge[0]
+                curr_weight = edge[1]
+                if distances[next_station] > distances[curr_station] + curr_weight:
+                    distances[next_station] = distances[curr_station] + curr_weight
+                    if curr_weight == 0:
+                        Q.appendleft(next_station)
+                    else:
+                        Q.append(next_station)
+
+        min_distances = {}
+        stations_coordinates = {}
+        for station, changes in distances.items():
+            station_name = station.name.split("-")[0]
+            if station_name not in min_distances:
+                min_distances[station_name] = INT_MAX
+                stations_coordinates[station_name] = station.location
+
+            min_distances[station_name] = min(min_distances[station_name], changes)
+
+        return min_distances, stations_coordinates
