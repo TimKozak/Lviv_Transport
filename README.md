@@ -6,7 +6,7 @@
 
 - CSV to JSON functions for public transport traffic files
 - OSMNX & FOLIUM area coverage functions
-- Public transport graph builder functions
+- Public transport graph model with different alrorithms for its analysis
 - CSVs & JSONs with public transport stops and routes of Lviv (relevance: May, 2022)
 
 ---
