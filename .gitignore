@@ -1,2 +1,5 @@
 isochrones/*
 cache/*
+__pycache__/
+*.py[cod]
+route_changes.csv
