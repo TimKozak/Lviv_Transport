@@ -1,7 +1,4 @@
 import json
-from pprint import pprint
-
-import pandas as pd
 
 from edge import Edge
 from location import Location
@@ -86,10 +83,10 @@ def create_graph(data):
 
 if __name__ == "__main__":
     routes1 = change_keys(
-        read_routes("./jsons/shapes_routes1.json"), direction="forward"
+        read_routes("./jsons/shapes/shapes_routes_even.json"), direction="forward"
     )
     routes2 = change_keys(
-        read_routes("./jsons/shapes_routes2.json"), direction="backward"
+        read_routes("./jsons/shapes/shapes_routes_odd.json"), direction="backward"
     )
     routes = {**routes1, **routes2}
 
