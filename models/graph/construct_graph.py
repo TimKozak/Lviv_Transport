@@ -91,5 +91,6 @@ if __name__ == "__main__":
     routes = {**routes1, **routes2}
 
     graph = create_graph(routes)
+    graph.add_edges_for_close_stations()
 
     graph.generate_route_changes_csv()
