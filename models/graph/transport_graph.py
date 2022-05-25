@@ -55,10 +55,10 @@ class TransportGraph:
                 row = [
                     station.name.split("-")[0],
                     station.location.lat,
-                    station.location.long,
+                    station.location.lon,
                     end_station,
                     station_coordinates[end_station].lat,
-                    station_coordinates[end_station].long,
+                    station_coordinates[end_station].lon,
                     changes,
                 ]
                 station_data.append(row)
@@ -150,7 +150,6 @@ class TransportGraph:
             for edge in self._adjacency_list[curr_station]:
                 next_station = edge[0]
                 curr_weight = edge[1]
-                curr_distance = edge[2]
                 if distances[next_station] > distances[curr_station] + curr_weight:
                     distances[next_station] = distances[curr_station] + curr_weight
                     if curr_weight == 0:
@@ -177,9 +176,8 @@ class TransportGraph:
         grid = dict()
         square_dist = threshold**2
 
-        # for i, (px, py) in reversed(list(enumerate(points))):
         for idx, st in enumerate(stations):
-            px, py = st.location.lat, st.location.long
+            px, py = st.location.lat, st.location.lon
             fx = px // threshold
             fy = py // threshold
 
@@ -195,7 +193,7 @@ class TransportGraph:
                         for jdx in grid[(nx, ny)]:
                             qx, qy = (
                                 stations[jdx].location.lat,
-                                stations[jdx].location.long,
+                                stations[jdx].location.lon,
                             )
                             rijsq = (px - qx) ** 2 + (py - qy) ** 2
 

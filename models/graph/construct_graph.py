@@ -43,7 +43,7 @@ def create_graph(data):
                     same_stations[point_name] = []
 
                 new_station = StationNode(
-                    location=Location(lat=point_lat, long=point_long),
+                    location=Location(lat=point_lat, lon=point_long),
                     name=point_name_with_route,
                 )
 
