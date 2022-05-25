@@ -80,18 +80,21 @@ class TransportGraph:
 
     def add_edges_for_close_stations(self, threshold=0.5):
         stations_pairs_list = self._get_close_pairs(threshold)
-        for pair in stations_pairs_list:
+
+        for idx, pair in enumerate(stations_pairs_list):
             first_station, second_station = pair
-            first_edge = Edge(
-                start=first_station, end=second_station, weight=1, distance=0
-            )
-            if first_edge not in self._edges:
+            print(idx)
+            print(first_station, second_station)
+            first_connected_stations = [
+                station[0] for station in self._adjacency_list[first_station]
+            ]
+            if second_station not in first_connected_stations:
                 self._adjacency_list[first_station].append((second_station, 1, 0))
 
-            second_edge = Edge(
-                start=second_station, end=first_station, weight=1, distance=0
-            )
-            if second_edge not in self._edges:
+            second_connected_stations = [
+                station[0] for station in self._adjacency_list[second_station]
+            ]
+            if first_station not in second_connected_stations:
                 self._adjacency_list[second_station].append((first_station, 1, 0))
 
     def _dfs(self, start):
@@ -170,13 +173,13 @@ class TransportGraph:
         return min_distances, stations_coordinates
 
     def _get_close_pairs(self, threshold: float):
-        stations = lat_lon2km(stations=self._stations, unit_size=UNIT_SIZE)
+        stations_km = lat_lon2km(stations=self._stations, unit_size=UNIT_SIZE)
 
         close_stations = []
         grid = dict()
         square_dist = threshold**2
 
-        for idx, st in enumerate(stations):
+        for idx, st in enumerate(stations_km):
             px, py = st.location.lat, st.location.lon
             fx = px // threshold
             fy = py // threshold
@@ -192,13 +195,15 @@ class TransportGraph:
                     if (nx, ny) in grid:
                         for jdx in grid[(nx, ny)]:
                             qx, qy = (
-                                stations[jdx].location.lat,
-                                stations[jdx].location.lon,
+                                stations_km[jdx].location.lat,
+                                stations_km[jdx].location.lon,
                             )
                             rijsq = (px - qx) ** 2 + (py - qy) ** 2
 
                             if square_dist >= rijsq:
-                                close_stations.append((stations[idx], stations[jdx]))
+                                close_stations.append(
+                                    (self._stations[idx], self._stations[jdx])
+                                )
 
             grid[(fx, fy)].append(idx)
 
